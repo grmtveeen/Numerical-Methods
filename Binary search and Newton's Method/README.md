@@ -1,0 +1,2 @@
+# Newton's method and "binary search"
+The program finds a numerical solution to the equation cos(x^2) = 0. To do this, she uses and compares two methods: Newton's method and "binary search". The program looks for a solution on the [A,B] range. For operation, it is necessary that f(A)*f(B)<0 and that there is a derivative at each point of the range [A,B]. The result of work: two solytion from Newton's method and "binary search".
