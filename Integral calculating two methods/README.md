@@ -1,0 +1,2 @@
+# Integral calculating two methods
+The program calculates the integral of the function x / (1 + x ^ 4) using two methods: the Simpson's method and the trapezoid method. The program selects the minimum partition of the segment of integration [Xleft,Xright] for each method so that the integral is found with a given accuracy epsilon. The result of the work program is the number of iterations and partitions, as well as the value of the integral for each of the methods.
