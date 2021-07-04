@@ -8,6 +8,7 @@
 #define Xo 0        //Initial condition and left border of the range
 #define Xstop 1     //Right border of the range
 #define EPS 1e-5    //Epsilon (Specified accuracy)
+#define STEP 0.05   //Step
 
 double f (double x, double y){
     return 2*x*y*L;
@@ -41,10 +42,13 @@ void Euler2 (double eps){   //Euler's method (specified accuracy)
     Yn = Yo, YnP = Yo, Xn = Xo, XnP = Xo;
     for (i = 0; Xn < Xstop; i++){
 
+        //It is Euler's method with splitting = splitting1.
         Ynn = Yn + f(Xn, Yn) * splitting1;  //It is Euler's method with splitting = splitting1.
         Xn += splitting1;
         Yn = Ynn;
 
+
+        //It is Euler's method with splitting = splitting1 / 2.
         splitting2 = splitting1/2;
         if (i != 0){                //It is Euler's method with splitting = splitting1 / 2.
             for (k = 0; k < 2; k ++){
@@ -53,6 +57,8 @@ void Euler2 (double eps){   //Euler's method (specified accuracy)
             XnP += splitting2;
             }; k = 0;
         };
+
+
         //Here we compare the result with splitting splitting1 and splitting1 / 2. If this condition is met we have to delete all data and start again with splitting = splitting1/2.
         if (fabs(YnP - Ynn) > eps) {
             splitting1 = splitting2;
@@ -99,7 +105,8 @@ void EulerCauchy2 (double eps){
     Yn = Yo, Xn = Xo, YnP = Yo, XnP = Xo;
     for (i = 0; Xn_n < Xstop; i++){
 
-        Ynn = Yn + f(Xn,Yn)*splitting1; //It is Euler Cauchy method with splitting = splitting1.
+        //It is Euler Cauchy method with splitting = splitting1.
+        Ynn = Yn + f(Xn,Yn)*splitting1;
 
         Xn_n = Xn+splitting1;
         Yn_n = Yn + (f(Xn, Yn) + f(Xn_n, Ynn)) * splitting1 / 2;
@@ -108,7 +115,8 @@ void EulerCauchy2 (double eps){
         Xn += splitting1;
 
 
-        splitting2 = splitting1 / 2;    //It is Euler Cauchy method with splitting = splitting1 / 2.
+        //It is Euler Cauchy method with splitting = splitting1 / 2.
+        splitting2 = splitting1 / 2;
         if (i != 0){
             for (int k = 0; k < 2; k++){
             YnnP = YnP + f(XnP, YnP) * splitting2;
@@ -121,6 +129,8 @@ void EulerCauchy2 (double eps){
             XnP += splitting2;
             };
         };
+
+
         //Here we compare the result with splitting splitting1 and splitting1 / 2. If this condition is met we have to delete all data and start again with splitting = splitting2.
         if (fabs(Yn_n - Yn_nP) > eps){
             splitting1 = splitting2;
@@ -138,9 +148,9 @@ void EulerCauchy2 (double eps){
 }
 
 int main (void){
-    Euler1 (0.05);
+    Euler1 (STEP);
     Euler2 (EPS);
-    EulerCauchy1 (0.05);
+    EulerCauchy1 (STEP);
     EulerCauchy2 (EPS);
     return 0;
 }
